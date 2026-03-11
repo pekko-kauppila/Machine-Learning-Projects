@@ -133,7 +133,7 @@ class DeepCNN(nn.Module):
 
         if self.output_type == 'binary':
             x = self.sigmoid(x)
-        elif self.output_type == 'regression':
-            x = self.relu(x)  # Ensure non-negative output for step counts
+        # For regression: no activation (model can output any value)
+        # Apply clipping during evaluation if needed
 
         return x.squeeze(-1)
