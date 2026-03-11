@@ -10,8 +10,11 @@ import torch.nn as nn
 
 
 class ShallowCNN(nn.Module):
-    def __init__(self, input_channels, sequence_length, num_filters=64, kernel_size=5, pool_size=2, dropout_rate=0.5):
+    def __init__(self, input_channels, sequence_length, num_filters=64, kernel_size=5, pool_size=2,
+                 output_type='binary', dropout_rate=0.5):
         super(ShallowCNN, self).__init__()
+
+        self.output_type = output_type
 
         # Convolutional layers
         self.conv1 = nn.Conv1d(input_channels, num_filters, kernel_size, padding=kernel_size // 2)
@@ -27,6 +30,8 @@ class ShallowCNN(nn.Module):
         self.linear1 = nn.Linear(flattened_size, 128)
         self.dropout1 = nn.Dropout(dropout_rate)
         self.linear2 = nn.Linear(128, 1)
+
+        self.sigmoid = nn.Sigmoid()
 
     def forward(self, x):
         # Conv block
@@ -44,4 +49,9 @@ class ShallowCNN(nn.Module):
         x = self.dropout1(x)
         x = self.linear2(x)
 
-        return x
+        # Apply activation based on task type
+        if self.output_type == 'binary':
+            x = self.sigmoid(x)
+        # For regression: no activation (model can output any value)
+
+        return x.squeeze(-1)
