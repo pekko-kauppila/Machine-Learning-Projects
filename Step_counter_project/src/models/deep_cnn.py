@@ -38,25 +38,25 @@ class DeepCNN(nn.Module):
         self.conv1 = nn.Conv1d(input_channels, num_filters, kernel_size=7, padding=3)
         self.bn1 = nn.BatchNorm1d(num_filters)
         self.pool1 = nn.MaxPool1d(kernel_size=2)
-        self.dropout_conv1 = nn.Dropout(0.2)
+        self.dropout_conv1 = nn.Dropout(dropout_rate * 0.5)  # Lower dropout in early conv layers
 
         # Conv Block 2
         self.conv2 = nn.Conv1d(num_filters, num_filters * 2, kernel_size=5, padding=2)
         self.bn2 = nn.BatchNorm1d(num_filters * 2)
         self.pool2 = nn.MaxPool1d(kernel_size=2)
-        self.dropout_conv2 = nn.Dropout(0.2)
+        self.dropout_conv2 = nn.Dropout(dropout_rate * 0.5)
 
         # Conv Block 3
         self.conv3 = nn.Conv1d(num_filters * 2, num_filters * 4, kernel_size=5, padding=2)
         self.bn3 = nn.BatchNorm1d(num_filters * 4)
         self.pool3 = nn.MaxPool1d(kernel_size=2)
-        self.dropout_conv3 = nn.Dropout(0.2)
+        self.dropout_conv3 = nn.Dropout(dropout_rate * 0.5)
 
         # Conv Block 4
         self.conv4 = nn.Conv1d(num_filters * 4, num_filters * 8, kernel_size=3, padding=1)
         self.bn4 = nn.BatchNorm1d(num_filters * 8)
         self.pool4 = nn.MaxPool1d(kernel_size=2)
-        self.dropout_conv4 = nn.Dropout(0.2)
+        self.dropout_conv4 = nn.Dropout(dropout_rate * 0.5)
 
         # Conv Block 5
         self.conv5 = nn.Conv1d(num_filters * 8, num_filters * 8, kernel_size=3, padding=1)
