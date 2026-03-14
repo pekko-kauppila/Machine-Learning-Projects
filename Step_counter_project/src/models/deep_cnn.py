@@ -10,7 +10,7 @@ import torch.nn as nn
 
 class DeepCNN(nn.Module):
     """
-    Deeper 1D CNN with 5 convolutional blocks.
+    Deeper 1D CNN with 5 convolutional blocks for step count regression.
 
     Architecture:
         - 5 Conv1D blocks with batch norm and pooling
@@ -22,17 +22,14 @@ class DeepCNN(nn.Module):
         input_channels: Number of input channels (default: 4)
         sequence_length: Length of input sequence (default: 200)
         num_filters: Base number of filters (progressively increased)
-        output_type: 'binary' or 'regression'
         dropout_rate: Dropout rate for regularization
     """
 
-    def __init__(self, input_channels, sequence_length, num_filters=64, output_type='binary', dropout_rate=0.5):
+    def __init__(self, input_channels, sequence_length, num_filters=64, dropout_rate=0.5):
         super(DeepCNN, self).__init__()
 
         # Note: sequence_length is accepted for API consistency but not used
         # since we use adaptive pooling
-
-        self.output_type = output_type
 
         # Conv Block 1
         self.conv1 = nn.Conv1d(input_channels, num_filters, kernel_size=7, padding=3)
@@ -75,7 +72,6 @@ class DeepCNN(nn.Module):
         self.output = nn.Linear(64, 1)
 
         self.relu = nn.ReLU()
-        self.sigmoid = nn.Sigmoid()
 
     def forward(self, x):
         # Conv Block 1
@@ -130,10 +126,5 @@ class DeepCNN(nn.Module):
 
         # Output
         x = self.output(x)
-
-        if self.output_type == 'binary':
-            x = self.sigmoid(x)
-        # For regression: no activation (model can output any value)
-        # Apply clipping during evaluation if needed
 
         return x.squeeze(-1)
