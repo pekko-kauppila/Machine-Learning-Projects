@@ -1,0 +1,17 @@
+# Core dependencies for Step Counter Project
+# Install with: pip install -r requirements.txt
+
+# Data handling
+numpy>=1.24.0
+pandas>=2.0.0
+
+# Machine learning
+torch>=2.0.0
+scikit-learn>=1.2.0
+
+# Visualization
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# Utilities
+pathlib2>=2.3.0; python_version < '3.4'
