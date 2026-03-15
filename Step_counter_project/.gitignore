@@ -1,0 +1,33 @@
+# Data and models (too large for git)
+data/
+models/saved/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg-info/
+dist/
+build/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Environment
+environment.yml  # Local conda env file (machine-specific)
+venv/
+env/
+.env
+
+# OS
+.DS_Store
+Thumbs.db
